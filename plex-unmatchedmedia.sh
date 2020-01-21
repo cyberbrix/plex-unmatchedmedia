@@ -13,8 +13,8 @@ then
   echo "3. Missing Plex metadata - movies or shows without a proper title."
   echo "Requirements: sqlite3"
   echo -e "\nRun this with a '-s' to use in a script. Only found issues will be displayed."
+  echo -e "\nVersion: 1.1"
   echo -e "***************************************"
-  echo -e "\nversion: 1.0"
 fi
 
 # Plex DB path
@@ -74,7 +74,7 @@ plexfiles=`sqlite3 "$plexdbpath" "$plexfilequery"`
 IFS=$'\n'
 for filepath in $filepaths
 do
-  [[ $silent != 1 ]] && echo -e "\nChecking '$filepath'"
+  [[ $silent != 1 ]] && echo "Checking '$filepath'"
 
   # find all video files bigger than 2 MB
   listoffiles=`find $filepath -type f -size +2M -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p'`
@@ -89,7 +89,12 @@ do
       filedir=$(dirname "${file}")
       
       # check if ignore file exists if missing, then file is missing
-      [[ ! -f "$filedir/.plexignore" ]] && echo "'$file' is missing from Plex"
+      if [[ ! -f "$filedir/.plexignore" ]]
+      then 
+        echo "'$file' is missing from Plex"
+      else
+       [[ $silent != 1 ]] && echo  "$file has plexignore file"
+      fi
     fi
   done
 done
