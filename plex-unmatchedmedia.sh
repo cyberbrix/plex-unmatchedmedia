@@ -14,6 +14,7 @@ then
   echo "Requirements: sqlite3"
   echo -e "\nRun this with a '-s' to use in a script. Only found issues will be displayed."
   echo -e "***************************************"
+  echo -e "\nversion: 1.0"
 fi
 
 # Plex DB path
