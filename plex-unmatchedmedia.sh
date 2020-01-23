@@ -104,7 +104,7 @@ done
 
 for plexfile in $plexfiles
 do
-  [[ ! -f "$plexfile" ]] && echo "$plexfile is missing"
+  [[ ! -f "$plexfile" ]] && echo "Plex content $plexfile is missing its file"
 done
 
 # Enable whitespace as line break
