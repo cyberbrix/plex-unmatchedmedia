@@ -26,9 +26,9 @@ done
 if [[ $silent != 1 ]]
 then
   echo -e "\n**** Plex Metadata Checking Script ****"
-  echo -e "\nThis script will check the Plex DB for the following issues:"
+  echo -e "\nThis script will check the Plex DB for the following issues in TV shows/movies:"
   echo "1. Video files not found in Plex"
-  echo "2. Plex conent missing a file"
+  echo "2. Plex content missing a file"
   echo "3. Missing Plex metadata - movies or shows without a proper title."
   echo -e "\nRequirements: sqlite3"
   echo -e "\nOptionss:"
@@ -86,7 +86,7 @@ fi
 
 
 # Query for missing metadata
-missingmetadataquery="SELECT C.file FROM metadata_items A LEFT JOIN media_items B ON A.id = B.metadata_item_id LEFT JOIN media_parts C ON B.id = C.media_item_id WHERE (A.media_item_count = 1 AND A.library_section_id > 0 AND (A.title_sort = '' OR A.title = '' $showyear)) OR (A.guid LIKE 'local%' AND A.metadata_type = 1 AND A.title = '');"
+missingmetadataquery="SELECT C.file FROM metadata_items A LEFT JOIN media_items B ON A.id = B.metadata_item_id LEFT JOIN media_parts C ON B.id = C.media_item_id WHERE (A.media_item_count = 1 AND A.library_section_id < 5 AND A.library_section_id > 0 AND (A.title_sort = '' OR A.title = '' $showyear)) OR (A.guid LIKE 'local%' AND A.metadata_type = 1 AND A.title = '');"
 
 # Query for finding all file paths
 filepathsquery="SELECT A.root_path FROM section_locations A LEFT JOIN library_sections B ON A.library_section_id = B.id WHERE (B.section_type = 1 OR B.section_type = 2);"
