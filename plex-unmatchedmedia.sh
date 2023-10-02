@@ -28,7 +28,7 @@ then
   echo -e "\n**** Plex Metadata Checking Script ****"
   echo -e "\nThis script will check the Plex DB for the following issues:"
   echo "1. Video files not found in Plex"
-  echo "2. Plex conent missing a file"
+  echo "2. Plex content missing a file"
   echo "3. Missing Plex metadata - movies or shows without a proper title."
   echo -e "\nRequirements: sqlite3"
   echo -e "\nOptionss:"
