@@ -58,7 +58,7 @@ if [[ ! -r "$plexdbpath" ]]
 then
   # attempt to find db file
   [[ $silent != 1 ]] && echo -e "\nDefault database path invalid, finding Plex database file"
-  plexdbpath=`find / -name "com.plexapp.plugins.library.db" -type f  -printf '%T+ %p\n'  2>/dev/null | grep -v "find:" | sort -r | head -1 | cut -d' ' -f2-`
+  plexdbpath=$(find / -name "com.plexapp.plugins.library.db" -type f  -printf '%T+ %p\n'  2>/dev/null | grep -v "find:" | sort -r | head -1 | cut -d' ' -f2-)
   if [[ ! -r "$plexdbpath" ]]
   then
     echo -e "\ncom.plexapp.plugins.library.db is not found or accessible"
@@ -104,7 +104,7 @@ fi
 
 ## Find all data not in Plex
 # Find file paths
-filepaths=`sqlite3 "$plexdbpath" "$filepathsquery"`
+filepaths=$(sqlite3 "$plexdbpath" "$filepathsquery")
 
 if  [[ -z "$filepaths" ]]
 then
@@ -114,7 +114,7 @@ fi
 
 
 # Find all files in plex
-plexfiles=`sqlite3 "$plexdbpath" "$plexfilequery"`
+plexfiles=$(sqlite3 "$plexdbpath" "$plexfilequery")
 
 [[ $silent != 1 ]] && echo -e "\nChecking files - finding all video content"
 
@@ -125,7 +125,7 @@ do
   [[ $silent != 1 ]] && echo "Checking '$filepath'"
 
   # find all video files bigger than 2 MB
-  listoffiles=`find $filepath -type f -size +2M ! -name '*.sub' -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p'`
+  listoffiles=$(find $filepath -type f -size +2M ! -name '*.sub' -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p')
 
   # check each file if it is listed in Plex
   for file in $listoffiles
@@ -164,7 +164,7 @@ unset IFS
 [[ $silent != 1 ]] && echo -e "\nChecking for Plex content that is missing metadata"
 
 #echo "query: $missingmetadataquery"
-unmatched=`sqlite3 "$plexdbpath" "$missingmetadataquery"`
+unmatched=$(sqlite3 "$plexdbpath" "$missingmetadataquery")
 [[ ! -z "$unmatched" ]] && echo -e "\nContent which is unmatched or missing metadata in Plex\n$unmatched"
 
 exit 0
