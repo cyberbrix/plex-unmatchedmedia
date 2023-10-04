@@ -14,8 +14,11 @@ Run this with a '-s' to use in a script. Only found issues will be displayed.
 Options:
 
 -s  use in a script. Only found issues will be displayed.
+
 -y find content missing year. Otherwise only title/sort title issues will be found
+
 -L list libraries for single library look up
+
 -l=N only run aginast a specific library (N). use -L to list library numbers
 
 Caveats:
