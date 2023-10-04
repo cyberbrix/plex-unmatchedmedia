@@ -69,7 +69,7 @@ then
 fi
 
 # Test if DB can access tables
-plextables=`sqlite3 "$plexdbpath" ".tables"`
+plextables=$(sqlite3 "$plexdbpath" ".tables")
 if [[ $plextables != *"metadata_items"* ]] 
 then
   echo -e "\nThe needed tables were not found. $plexdbpath may not be the right database"
@@ -125,7 +125,7 @@ do
   [[ $silent != 1 ]] && echo "Checking '$filepath'"
 
   # find all video files bigger than 2 MB
-  listoffiles=$(find $filepath -type f -size +2M ! -name '*.sub' -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p')
+  listoffiles=$(find "$filepath" -type f -size +2M ! -name '*.sub' -exec file -N -i -- {} + | sed -n 's!: video/[^:]*$!!p')
 
   # check each file if it is listed in Plex
   for file in $listoffiles
@@ -165,6 +165,6 @@ unset IFS
 
 #echo "query: $missingmetadataquery"
 unmatched=$(sqlite3 "$plexdbpath" "$missingmetadataquery")
-[[ ! -z "$unmatched" ]] && echo -e "\nContent which is unmatched or missing metadata in Plex\n$unmatched"
+[[ -n "$unmatched" ]] && echo -e "\nContent which is unmatched or missing metadata in Plex\n$unmatched"
 
 exit 0
